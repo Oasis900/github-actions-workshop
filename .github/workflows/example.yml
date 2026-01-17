@@ -1,0 +1,50 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # JOB 1: TEST
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '25'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Tests
+        run: npm test
+
+  # # JOB 2: DEPLOY (Only runs if Test passes)
+  # deploy:
+  #   needs: test  # This is the "gatekeeper" - deploy waits for test to pass
+  #   runs-on: ubuntu-latest
+  #   # Only deploy when pushing to main (ignore pull requests)
+  #   if: github.ref == 'refs/heads/main' 
+    
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
+
+  #     - name: Install Surge
+  #       run: npm install --global surge
+
+  #     - name: Deploy to Surge
+  #       # The domain must be unique. 
+  #       # Students should replace 'my-unique-app-name' with something custom.
+  #       run: surge ./src my-unique-app-name.surge.sh --token ${{ secrets.SURGE_TOKEN }}
