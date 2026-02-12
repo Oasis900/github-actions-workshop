@@ -1,4 +1,4 @@
-name: Farmyard time
+name: Better Farmyard time
 
 on: 
   workflow_dispatch:
@@ -7,6 +7,10 @@ jobs:
   manually-triggered:
     runs-on: ubuntu-latest
     steps:
+      - name: My Action - Check the right branch
+        uses: kardelio/branchcheck-gha@v1
+        with:
+          allowed_branch: "main"
       - name: Cowsays
         uses: mscoutermarsh/cowsays-action@v1
         with:
