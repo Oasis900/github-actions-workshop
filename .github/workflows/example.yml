@@ -20,7 +20,10 @@ jobs:
           node-version: '25'
 
       - name: Install dependencies
-        run: npm install
+        run: npm Install
+
+      - name: Lint Check
+        run: npx standard --fix
 
       - name: Run Tests
         run: npm test
